@@ -3,10 +3,9 @@ set -ex
 
 if command -v nvidia-smi; then
     echo "NVidia driver detected, using nvidia/cudagl image"
-    UPSTREAM_IMAGE=nvidia/cudagl:10.1-runtime-ubuntu18.04
-else
+    UPSTREAM_IMAGE=nvidia/cudagl:11.4.2-runtime-ubuntu20.04
     echo "NVidia driver not found, using regular ubuntu image"
-    UPSTREAM_IMAGE=ubuntu:18.04
+    UPSTREAM_IMAGE=ubuntu:20.04
 fi
 
 if ls *.deb 1> /dev/null 2>&1; then

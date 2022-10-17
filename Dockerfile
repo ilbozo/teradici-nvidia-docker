@@ -1,4 +1,4 @@
-ARG UPSTREAM_IMAGE="nvidia/cudagl:10.1-runtime-ubuntu18.04"
+ARG UPSTREAM_IMAGE="nvidia/cudagl:11.4.2-runtime-ubuntu20.04"
 FROM ${UPSTREAM_IMAGE}
 
 ARG USERNAME
@@ -6,25 +6,24 @@ ARG PUID
 ARG PGID
 
 RUN apt-get update && \
-    apt-get install -y wget \
+    apt-get install -y curl \
         lsb-release \
         sudo \
-        libgnome-keyring0 \
         libwebkitgtk-1.0 \
         iptables \
         net-tools
+RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata keyboard-configuration
 # Use the following two lines to install the Teradici repository package
-RUN wget -O teradici-repo-latest.deb https://downloads.teradici.com/ubuntu/teradici-repo-bionic-latest.deb
-RUN apt install ./teradici-repo-latest.deb
+RUN curl -1sLf https://dl.teradici.com/DeAdBCiUYInHcSTy/pcoip-client/cfg/setup/bash.deb.sh | sudo -E distro=ubuntu codename=focal bash
 
 # Uncomment the following line to install Beta client builds from the internal repository
 #RUN echo "deb [arch=amd64] https://downloads.teradici.com/ubuntu bionic-beta non-free" > /etc/apt/sources.list.d/pcoip.list
 
 # Install apt-transport-https to support the client installation
-RUN apt-get update && apt-get install -y apt-transport-https
+RUN DEBIAN_FRONTEND="noninteractive" apt-get update && apt-get install -y apt-transport-https
 
 # Install the client application
-RUN apt-get install -y pcoip-client
+RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y pcoip-client
 
 # Setup a functional user within the docker container with the same permissions as your local user.
 # Replace 1000 with your user / group id
