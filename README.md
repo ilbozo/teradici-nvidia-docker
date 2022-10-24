@@ -1,7 +1,7 @@
 # Teradici Docker Client
 Teradici client on linux with optional nvidia-docker on nvidia GPUs. 
 Fork of the animal-logic repo https://github.com/AnimalLogic/teradici-nvidia-docker. \
-As the official client only works in ubuntu-22.04 this docker solution makes it available on more distros 
+As the official client only works in ubuntu-22.04 this docker solution makes it available on more distros. \
 Tested on Fedora 36/37 and Rocky 8.5
 
 ## Getting Started
