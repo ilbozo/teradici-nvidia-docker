@@ -6,7 +6,7 @@ Tested on Fedora 36/37 and Rocky 8.5
 
 ## Getting Started
 Install `docker` on your linux box. \
-If you have a NVidia card please follow all the instructions there to install NVidia Docker: https://github.com/NVIDIA/nvidia-docker
+If you have a NVidia card please follow all the instructions there to install NVidia Docker: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/overview.html
 
 ## Build
 Run `./build.sh` to build the docker image using the current user name and id
