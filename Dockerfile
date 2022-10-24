@@ -1,23 +1,14 @@
 ARG UPSTREAM_IMAGE
-FROM ${UPSTREAM_IMAGE}
-
 ARG USERNAME
 ARG PUID
 ARG PGID
 
-RUN apt-get update && \
-    apt-get install -y curl \
-        lsb-release \
-        sudo \
-        libwebkitgtk-1.0 \
-        iptables \
-        net-tools
+FROM ${UPSTREAM_IMAGE}
+
+RUN apt-get update && apt-get install -y curl lsb-release sudo libwebkitgtk-1.0 iptables net-tools
 RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata keyboard-configuration
 # Use the following two lines to install the Teradici repository package
 RUN curl -1sLf https://dl.teradici.com/DeAdBCiUYInHcSTy/pcoip-client/cfg/setup/bash.deb.sh | sudo -E distro=ubuntu codename=focal bash
-
-# Uncomment the following line to install Beta client builds from the internal repository
-#RUN echo "deb [arch=amd64] https://downloads.teradici.com/ubuntu bionic-beta non-free" > /etc/apt/sources.list.d/pcoip.list
 
 # Install apt-transport-https to support the client installation
 RUN DEBIAN_FRONTEND="noninteractive" apt-get update && apt-get install -y apt-transport-https
