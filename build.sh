@@ -9,14 +9,6 @@ else
     UPSTREAM_IMAGE=ubuntu:20.04
 fi
 
-if ls *.deb 1> /dev/null 2>&1; then
-    echo "Pulse secure installer detected"
-    ENABLE_PULSESECURE=1
-else
-    echo "Pulse secure installer not detected, download .deb file and place in folder if needed"
-    ENABLE_PULSESECURE=0
-fi
-
 docker build --progress plain \
     -t pcoip-client \
     --build-arg USERNAME=$LOGNAME \

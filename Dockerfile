@@ -36,12 +36,6 @@ RUN mkdir -p /etc/sudoers.d/ && \
     chmod 0440 /etc/sudoers.d/${USERNAME} && \
     chown ${PUID}:${PGID} -R /home/${USERNAME}
 
-ARG ENABLE_PULSESECURE=0
-ENV ENABLE_PULSESECURE=${ENABLE_PULSESECURE}
-
-ADD LICENSE ps-pulse-linux-*.deb /tmp/
-RUN bash -c "if [[ $ENABLE_PULSESECURE == 1 ]]; then dpkg -i /tmp/ps-pulse-*.deb; fi;"
-
 # Set some environment variables for the current user
 USER ${USERNAME}
 ENV HOME /home/${USERNAME}
