@@ -1,5 +1,6 @@
 ARG UPSTREAM_IMAGE
 FROM ${UPSTREAM_IMAGE}
+
 ARG USERNAME
 ARG PUID
 ARG PGID
@@ -8,10 +9,12 @@ RUN echo "user:  ${USERNAME}"
 RUN echo "puid:  ${PUID}"
 RUN echo "pgid:  ${PGID}"
 
-
-RUN apt-get -y update
+ENV DEBIAN_FRONTEND noninteractive
+ENV TZ=Etc/UTC
+RUN apt -y update
+RUN apt -y upgrade
 RUN apt install -y curl sudo
-RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get -y install tzdata keyboard-configuration
+RUN apt -y install tzdata keyboard-configuration
 RUN curl -1sLf https://dl.teradici.com/DeAdBCiUYInHcSTy/pcoip-client/cfg/setup/bash.deb.sh | sudo -E distro=ubuntu codename=focal bash
 RUN apt install -y gnupg apt-transport-https
 RUN apt install -y pcoip-client
@@ -23,9 +26,6 @@ RUN mkdir -p /etc/sudoers.d/ && \
     echo "${USERNAME} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${USERNAME} && \
     chmod 0440 /etc/sudoers.d/${USERNAME} && \
     chown ${PUID}:${PGID} -R /home/${USERNAME}
-
-RUN useradd -ms /bin/bash ${USERNAME}
-USER toto_user
 
 ## Set some environment variables for the current user
 USER ${USERNAME}

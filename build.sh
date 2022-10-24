@@ -1,7 +1,13 @@
 #!/bin/bash
 set -ex
 
-UPSTREAM_IMAGE=ubuntu:20.04
+if command -v nvidia-smi; then
+    echo "NVidia driver detected, using nvidia/cudagl image"
+    UPSTREAM_IMAGE=nvidia/cudagl:11.4.2-runtime-ubuntu20.04
+else
+    echo "NVidia driver not found, using regular ubuntu image"
+    UPSTREAM_IMAGE=ubuntu:20.04
+fi
 
 docker build --progress plain \
     -t pcoip-client \
