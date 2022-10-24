@@ -1,24 +1,21 @@
 ARG UPSTREAM_IMAGE
+FROM ${UPSTREAM_IMAGE}
 ARG USERNAME
 ARG PUID
 ARG PGID
 
-FROM ${UPSTREAM_IMAGE}
+RUN echo "user:  ${USERNAME}"
+RUN echo "puid:  ${PUID}"
+RUN echo "pgid:  ${PGID}"
 
-RUN apt-get update && apt-get install -y curl lsb-release sudo libwebkitgtk-1.0 iptables net-tools
-RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata keyboard-configuration
-# Use the following two lines to install the Teradici repository package
+
+RUN apt-get -y update
+RUN apt install -y curl sudo
+RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get -y install tzdata keyboard-configuration
 RUN curl -1sLf https://dl.teradici.com/DeAdBCiUYInHcSTy/pcoip-client/cfg/setup/bash.deb.sh | sudo -E distro=ubuntu codename=focal bash
+RUN apt install -y gnupg apt-transport-https
+RUN apt install -y pcoip-client
 
-# Install apt-transport-https to support the client installation
-RUN DEBIAN_FRONTEND="noninteractive" apt-get update && apt-get install -y apt-transport-https
-
-# Install the client application
-RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y pcoip-client
-
-# Setup a functional user within the docker container with the same permissions as your local user.
-# Replace 1000 with your user / group id
-# Replace ${USERNAME} with your local username
 RUN mkdir -p /etc/sudoers.d/ && \
     mkdir -p /home/${USERNAME} && \
     echo "${USERNAME}:x:${PUID}:${PGID}:${USERNAME},,,:/home/${USERNAME}:/bin/bash" >> /etc/passwd && \
@@ -27,12 +24,15 @@ RUN mkdir -p /etc/sudoers.d/ && \
     chmod 0440 /etc/sudoers.d/${USERNAME} && \
     chown ${PUID}:${PGID} -R /home/${USERNAME}
 
-# Set some environment variables for the current user
+RUN useradd -ms /bin/bash ${USERNAME}
+USER toto_user
+
+## Set some environment variables for the current user
 USER ${USERNAME}
 ENV HOME /home/${USERNAME}
 
-# Set the path for QT to find the keyboard context
+## Set the path for QT to find the keyboard context
 ENV QT_XKB_CONFIG_ROOT /user/share/X11/xkb
-
+#
 ADD entrypoint.sh /usr/bin/
 ENTRYPOINT exec /usr/bin/entrypoint.sh
