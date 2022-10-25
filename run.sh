@@ -1,6 +1,7 @@
 #!/bin/bash
 user=$(id -u)
 group=$(id -g)
+NVIDIA_DRIVER_CAPABILITIES="all"
 mkdir -p .logs
 mkdir -p .config
 
