@@ -1,6 +1,6 @@
 #!/bin/bash
-user=$(id -u)
-group=$(id -g)
+user_id=$(id -u)
+group_id=$(id -g)
 NVIDIA_DRIVER_CAPABILITIES="all"
 mkdir -p .logs
 mkdir -p .config
@@ -15,7 +15,6 @@ then
         --privileged \
         --cap-add=NET_ADMIN \
         --device /dev/net/tun \
-        -u "$user":"$group" \
         --rm \
         -v "$(pwd)"/.config/:/home/"$LOGNAME"/.config/Teradici \
         -v "$(pwd)"/.logs:/tmp/Teradici/"$LOGNAME"/PCoIPClient/logs \
