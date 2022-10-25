@@ -15,7 +15,6 @@ then
         --privileged \
         --cap-add=NET_ADMIN \
         --device /dev/net/tun \
-        -e PULSE_SERVER=unix:/run/user/"$user"/pulse/native \
         -u "$user":"$group" \
         --rm \
         -v "$(pwd)"/.config/:/home/"$LOGNAME"/.config/Teradici \
@@ -28,7 +27,6 @@ else
         --privileged \
         --cap-add=NET_ADMIN \
         --device /dev/net/tun \
-        --device /dev/snd \
         --rm \
         -v "$(pwd)"/.config/:/home/"$LOGNAME"/.config/Teradici \
         -v "$(pwd)"/.logs:/tmp/Teradici/"$LOGNAME"/PCoIPClient/logs \
