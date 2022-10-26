@@ -18,7 +18,7 @@ RUN apt -y install tzdata keyboard-configuration
 RUN curl -1sLf https://dl.teradici.com/DeAdBCiUYInHcSTy/pcoip-client/cfg/setup/bash.deb.sh | sudo -E distro=ubuntu codename=focal bash
 RUN apt install -y gnupg apt-transport-https
 RUN apt install -y pcoip-client
-
+RUN apt install -y libmfx1 libmfx-tools libva-drm2 libva-x11-2 vainfo intel-media-va-driver-non-free
 RUN mkdir -p /etc/sudoers.d/ && \
     mkdir -p /home/${USERNAME} && \
     echo "${USERNAME}:x:${PUID}:${PGID}:${USERNAME},,,:/home/${USERNAME}:/bin/bash" >> /etc/passwd && \
