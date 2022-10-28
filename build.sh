@@ -11,6 +11,7 @@ fi
 
 docker build --progress plain \
     -t pcoip-client \
+    --tag=audio:0.0.1 \
     --build-arg USERNAME=$LOGNAME \
     --build-arg PUID=$(id -u) \
     --build-arg PGID=$(id -g) \

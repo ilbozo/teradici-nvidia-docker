@@ -4,6 +4,7 @@ group_id=$(id -g)
 NVIDIA_DRIVER_CAPABILITIES="all"
 mkdir -p ~/.config/Teradici/.logs
 mkdir -p ~/.config/Teradici/.config
+mkdir -p ~/.config/Teradici/.config/pulse
 
 
 xhost +local:docker
@@ -15,6 +16,7 @@ then
         --privileged \
         --cap-add=NET_ADMIN \
         --device /dev/net/tun \
+        --device /dev/snd \
         --rm \
         -v ~/.config/Teradici:/home/"$LOGNAME"/.config/Teradici \
         -v ~/.logs/Teradici:/tmp/Teradici/"$LOGNAME"/PCoIPClient/logs \
@@ -26,6 +28,7 @@ else
         --privileged \
         --cap-add=NET_ADMIN \
         --device /dev/net/tun \
+        --device /dev/snd \
         --rm \
         -v ~/.config/Teradici:/home/"$LOGNAME"/.config/Teradici \
         -v ~/.logs/Teradici:/tmp/Teradici/"$LOGNAME"/PCoIPClient/logs \

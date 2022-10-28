@@ -19,6 +19,9 @@ RUN curl -1sLf https://dl.teradici.com/DeAdBCiUYInHcSTy/pcoip-client/cfg/setup/b
 RUN apt install -y gnupg apt-transport-https
 RUN apt install -y pcoip-client
 RUN apt install -y libmfx1 libmfx-tools libva-drm2 libva-x11-2 vainfo intel-media-va-driver-non-free
+# sound
+RUN apt install -y --no-install-recommends alsa-base alsa-utils libsndfile1-dev && apt clean
+
 RUN mkdir -p /etc/sudoers.d/ && \
     mkdir -p /home/${USERNAME} && \
     echo "${USERNAME}:x:${PUID}:${PGID}:${USERNAME},,,:/home/${USERNAME}:/bin/bash" >> /etc/passwd && \
